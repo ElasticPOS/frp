@@ -193,6 +193,8 @@ func (svr *Service) Run(ctx context.Context) error {
 }
 
 func (svr *Service) keepControllerWorking() {
+	svr.ctlMu.Lock()
+	defer svr.ctlMu.Unlock()
 	<-svr.ctl.Done()
 
 	// There is a situation where the login is successful but due to certain reasons,
